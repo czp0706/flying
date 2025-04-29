@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyingBird单词拼写游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 游戏画布区域 -->
+        <canvas id="gameCanvas"></canvas>
+        
+        <!-- 单词拼写区域 -->
+        <div class="word-spelling-container">
+            <div class="word-display">
+                <span id="incompleteWord"></span>
+                <span id="wordMeaning"></span>
+            </div>
+            <div id="letterOptions" class="letter-options"></div>
+        </div>
+        
+        <!-- 控制按钮区域 -->
+        <div class="control-buttons">
+            <button id="soundToggle" class="control-btn">
+                <span class="sound-on">音效：开</span>
+                <span class="sound-off hidden">音效：关</span>
+            </button>
+            <button id="difficultyToggle" class="control-btn difficulty-medium">
+                <span class="difficulty-text">难度：中</span>
+            </button>
+            <div class="file-input-wrapper">
+                <button class="control-btn">导入单词</button>
+                <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" />
+            </div>
+            <button id="startGame" class="control-btn">开始游戏</button>
+        </div>
+    </div>
+
+    <!-- Excel处理库 -->
+    <script src="xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

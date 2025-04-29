@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eff8fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 90%;
+    max-width: 800px;
+    height: 90vh;
+    max-height: 900px;
+    display: flex;
+    flex-direction: column;
+    background-color: #eff8fa;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* 游戏画布样式 */
+#gameCanvas {
+    width: 100%;
+    height: 70%;
+    background-color: #add8e6;
+    display: block;
+}
+
+/* 单词拼写区域样式 */
+.word-spelling-container {
+    width: 100%;
+    height: 20%;
+    background-color: #e0eaf9;
+    border-radius: 5px 5px 0px 0px;
+    margin-top: -10px;
+    padding: 15px;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+.word-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#incompleteWord {
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+#wordMeaning {
+    font-size: 1.5rem;
+    color: #424242;
+}
+
+.letter-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.letter-option {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4a90e2;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.letter-option:hover {
+    transform: scale(1.1);
+    background-color: #3a7bc8;
+}
+
+/* 控制按钮区域样式 */
+.control-buttons {
+    width: 100%;
+    height: 12%;
+    background-color: #eff8fa;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 100px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.control-btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* 按钮不同颜色 */
+#soundToggle {
+    background-color: #4CAF50; /* 绿色 */
+}
+
+#soundToggle:hover {
+    background-color: #3d8b40;
+}
+
+#soundToggle .sound-off {
+    color: #fff;
+}
+
+/* 音效关闭状态使用灰色 */
+.sound-off.hidden + #soundToggle, 
+#soundToggle.sound-off {
+    background-color: #777;
+}
+
+/* 难度按钮样式 */
+#difficultyToggle {
+    background-color: #FF9800; /* 橙色 */
+}
+
+#difficultyToggle:hover {
+    background-color: #e68900;
+}
+
+/* 难度级别不同配色 - 使用同一颜色的不同深度 */
+#difficultyToggle.difficulty-low {
+    background-color: #fd8cb3; /* 浅粉色 */
+}
+
+#difficultyToggle.difficulty-medium {
+    background-color: #fc5891; /* 中粉色 */
+}
+
+#difficultyToggle.difficulty-high {
+    background-color: #f71f6b; /* 深粉色 */
+}
+
+/* 文件导入按钮样式 */
+.file-input-wrapper .control-btn {
+    background-color: #FF9800; /* 橙色 */
+}
+
+.file-input-wrapper .control-btn:hover {
+    background-color: #c97a03;
+}
+
+/* 开始游戏按钮样式 */
+#startGame {
+    background-color: #364bed; /* 蓝色 */
+}
+
+#startGame:hover {
+    background-color: #2f42d3;
+}
+
+.control-btn:hover {
+    background-color: #3a7bc8;
+}
+
+.file-input-wrapper {
+    position: relative;
+}
+
+#fileInput {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* 游戏结束弹窗样式 */
+.game-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.game-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    width: 80%;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    animation: modal-appear 0.5s ease-out;
+    transform-origin: center center;
+}
+
+@keyframes modal-appear {
+    0% { transform: scale(0.7); opacity: 0; }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-title {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #4a90e2;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    margin-top: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-btn:hover {
+    background-color: #3a7bc8;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.hidden {
+    display: none;
+} 
